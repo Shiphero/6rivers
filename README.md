@@ -1,2 +1,2 @@
-# 6rivers
-6Rivers client
+# 6river
+6River client
