@@ -3,13 +3,6 @@ from dataclasses import dataclass, field
 
 
 @dataclass
-class Container:
-
-    id: str
-    type: str
-
-
-@dataclass
 class Identifier:
 
     label: str

@@ -49,14 +49,14 @@ class SixRiverClient:
         }
         self._url = f"{url}/{env}/{version}"
 
-    def send(self, msg: messages.SixRiverMessage):
+    def send(self, msg: messages.SouthboundMessage):
         """
         Given a six river message that correlates with one of the
         supported endpoints, we serialize it and post to the six river
         url
 
         Parameters:
-        - msg: A SixRiverMessage that corresponds to a supported endpoint
+        - msg: A SouthboundMessage that corresponds to a supported endpoint
 
 
         Returns:
@@ -68,7 +68,7 @@ class SixRiverClient:
         if not endpoint:
             raise TypeError(
                 f"Unsupported message of type {type(msg)}. " \
-                f"Expected instance of {messages.SixRiverMessage.__name__}"
+                f"Expected instance of {messages.SouthboundMessage.__name__}"
             )
 
         url = slash_join(self._url, endpoint)
