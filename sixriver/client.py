@@ -37,19 +37,22 @@ class SixRiverClient:
     """
 
     def __init__(self,
-        token: str,
-        url: str ="https://sixdk.6river.tech/",
-        env: str ="prod",
-        version: str ="v2"
+        token,  # str
+        url="https://sixdk.6river.tech/",  # str ="https://sixdk.6river.tech/"
+        env="prod",  # str ="prod"
+        version="v2",  # str ="v2"
     ):
         self._token = token
         self._headers = {
             "Content-Type": "application/json",
             "6DK-Token": token
         }
-        self._url = f"{url}/{env}/{version}"
+        self._url = "{}/{}/{}".format(url, env, version)
 
-    def send(self, msg: messages.SouthboundMessage):
+    def send(
+        self,
+        msg,  # messages.SouthboundMessage
+    ):
         """
         Given a six river message that correlates with one of the
         supported endpoints, we serialize it and post to the six river
@@ -67,8 +70,8 @@ class SixRiverClient:
 
         if not endpoint:
             raise TypeError(
-                f"Unsupported message of type {type(msg)}. " \
-                f"Expected instance of {messages.SouthboundMessage.__name__}"
+                "Unsupported message of type {}. Expected instance of {}" \
+                .format(type(msg), messages.SouthboundMessage.__name__)
             )
 
         url = slash_join(self._url, endpoint)
