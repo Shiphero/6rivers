@@ -19,6 +19,7 @@ class Product:
     unit_of_measure: str = None
     unit_of_measure_quantity: int = None
     dimension_unit_of_measure: str = None
+    weight_unit_of_measure: str = None
     length: float = None
     width: float = None
     height: float = None
