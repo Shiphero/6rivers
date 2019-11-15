@@ -1,10 +1,15 @@
 import enum
 
 from datetime import date
-from marshmallow import Schema, EXCLUDE, fields, pprint, post_dump, post_load
+from marshmallow import Schema, fields, pprint, post_dump, post_load
 
-from ..utils import camelcase
-from .. import models
+try:
+    from marshmallow import EXCLUDE
+except:
+    EXCLUDE = "exclude"
+
+from sixriver.utils import camelcase
+from sixriver import models
 
 from .deserializer import register_schema
 

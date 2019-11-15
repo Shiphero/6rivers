@@ -1,7 +1,7 @@
 from datetime import date
 from marshmallow import Schema, fields, pprint, post_dump, post_load
 
-from .. import models
+from sixriver import models
 
 from .common import SixRiverSchema
 from .deserializer import register_schema

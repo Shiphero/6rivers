@@ -1,7 +1,7 @@
 from datetime import date
 from marshmallow import Schema, fields, pprint, post_load
 
-from .. import models
+from sixriver import models
 
 from .common import SixRiverSchema
 from .deserializer import register_schema
@@ -25,7 +25,7 @@ class ContainerInductedSchema(SixRiverSchema):
 
     __schema_name__ = "containerInducted"
 
-    timestamp = fields.AwareDateTime()
+    timestamp = fields.DateTime()
     message_type = fields.Str(load_from="messageType")
     group_type = fields.Str(load_from="groupType")
     group_id = fields.Str(load_from="groupID")
@@ -44,7 +44,7 @@ class ContainerPickCompleteSchema(SixRiverSchema):
 
     __schema_name__ = "containerPickComplete"
 
-    timestamp = fields.AwareDateTime()
+    timestamp = fields.DateTime()
     message_type = fields.Str(load_from="messageType")
     group_type = fields.Str(load_from="groupType")
     group_id = fields.Str(load_from="groupID")

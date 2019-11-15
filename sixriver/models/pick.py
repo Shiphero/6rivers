@@ -3,7 +3,7 @@ import enum
 from datetime import datetime
 
 from .common import Identifier, Product
-from ..utils import camelcase
+from sixriver.utils import camelcase
 
 
 class GroupType(enum.Enum):
@@ -20,7 +20,7 @@ def convert_group_type(group_type):
         val = GroupType(val)
 
     elif val not in valid_group_types:
-        raise ValueError(f"Invalid group type, must be one of {valid_group_types}")
+        raise ValueError("Invalid group type, must be one of {}".format(valid_group_types))
 
     return val
 

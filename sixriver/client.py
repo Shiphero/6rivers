@@ -1,6 +1,10 @@
 import requests
 
-from urllib.parse import urljoin
+try:
+    from urllib.parse import urljoin
+except:
+    from urlparse import urljoin
+
 from functools import reduce
 
 from . import messages

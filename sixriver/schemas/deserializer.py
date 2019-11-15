@@ -9,7 +9,10 @@ class Deserializer:
     _schemas = []
 
     @classmethod
-    def deserialize(cls, data: dict):
+    def deserialize(
+      cls,
+      data,  # dict
+    ):
         """
         Deserialize a payload, building the corresponding schema
 
