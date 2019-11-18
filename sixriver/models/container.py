@@ -23,7 +23,7 @@ class ContainerInducted(object):
         picks,  # List['Pick']  # avoid circular dependencies
         data=None,  # dict
     ):
-        self.group_type = GroupType(self.group_type)
+        self.group_type = GroupType(group_type)
         self.group_id = group_id
         self.timestamp = timestamp
         self.container = container
@@ -47,7 +47,7 @@ class ContainerPickComplete(object):
     ):
         self.timestamp = timestamp
         self.group_id = group_id
-        self.group_type = GroupType(self.group_type)
+        self.group_type = GroupType(group_type)
         self.container = container
         self.induct = induct
         self.picks = picks

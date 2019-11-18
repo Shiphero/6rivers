@@ -44,7 +44,7 @@ class Pick(object):
         self.source_location = source_location
         self.each_quantity = each_quantity
         self.product = product
-        self.group_type = convert_group_type(self.group_type)
+        self.group_type = convert_group_type(group_type)
         self.group_id = group_id
         self.pick_id = pick_id
         self.container = container
@@ -104,7 +104,7 @@ class PickTaskPicked(object):
         device_id=None,  # str = None
         data=None,  # str = None
     ):
-        self.group_type = convert_group_type(self.group_type)
+        self.group_type = convert_group_type(group_type)
         self.timestamp = timestamp
         self.pick_id = pick_id
         self.group_id = group_id

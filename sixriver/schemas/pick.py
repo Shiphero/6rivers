@@ -27,7 +27,9 @@ class PickSchema(SixRiverSchema):
     def validate_group_type(self, data, **kwargs):
         valid_types = [models.GroupType.ORDER_PICK.value, models.GroupType.BATCH_PICK.value]
         if data not in valid_types:
-            raise ValidationError(f'Invalid group_type, must be one of {valid_types}')
+            raise ValidationError("Invalid group_type '{}', must be one of {}".format(
+                data, valid_types)
+            )
 
     @post_load
     def make_pick(self, data, **kwargs):
@@ -78,7 +80,9 @@ class PickTaskPickedSchema:
     def validate_group_type(self, data, **kwargs):
         valid_types = [models.GroupType.ORDER_PICK.value, models.GroupType.BATCH_PICK.value]
         if data not in valid_types:
-            raise ValidationError(f'Invalid group_type, must be one of {valid_types}')
+            raise ValidationError("Invalid group_type '{}', must be one of {}".format(
+                data, valid_types)
+            )
 
     @post_load
     def make_pick_task_picked(self, data, **kwargs):

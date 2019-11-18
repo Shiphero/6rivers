@@ -26,15 +26,26 @@ class SixRiverSchema(Schema):
         unknown = EXCLUDE
 
     def on_bind_field(self, field_name, field_obj):
-        field_obj.data_key = camelcase(field_obj.data_key or field_name)
+        if hasattr(field_obj, 'data_key'):
+            k = field_obj.data_key or field_name
+
+        else:
+            setattr(field_obj, 'data_key', None)
+            k = field_name
+
+        field_obj.data_key = camelcase(k)
+        print "DK: ", field_obj.data_key
 
     @post_dump(pass_many=True, pass_original=True)
-    def normalize(self, data, original_data, many, **kwargs):
-        original_data = original_data if many else [original_data]
+    def normalize(self, data, many, original_data, **kwargs):
+        # print "DATA: ", data
+        # print "ORIG DATA: ", original_data
+
+        _original_data = original_data if many else [original_data]
         _data = data if many else [data]
 
         # Inspect the original object to convert enums
-        for idx, e in enumerate(original_data):
+        for idx, e in enumerate(_original_data):
             obj = e if isinstance(e, dict) else e.__dict__
             for key, value in obj.items():
                 if isinstance(value, enum.Enum):
@@ -46,7 +57,7 @@ class SixRiverSchema(Schema):
                 if value is None:
                     e.pop(key)
 
-        return data
+        return _data
 
 
 @register_schema
