@@ -50,7 +50,7 @@ class IdentifierSchema(SixRiverSchema):
     __schema_name__ = "identifier"
 
     label = fields.Str(required=True)
-    allowed_values = fields.Nested(fields.Str, many=True)
+    allowed_values = fields.List(fields.String(), many=True)
 
     @post_load
     def make_identifier(self, data, **kwargs):
