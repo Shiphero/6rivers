@@ -25,22 +25,8 @@ class SixRiverSchema(Schema):
     class Meta:
         unknown = EXCLUDE
 
-    def on_bind_field(self, field_name, field_obj):
-        if hasattr(field_obj, 'data_key'):
-            k = field_obj.data_key or field_name
-
-        else:
-            setattr(field_obj, 'data_key', None)
-            k = field_name
-
-        field_obj.data_key = camelcase(k)
-        print "DK: ", field_obj.data_key
-
     @post_dump(pass_many=True, pass_original=True)
     def normalize(self, data, many, original_data, **kwargs):
-        # print "DATA: ", data
-        # print "ORIG DATA: ", original_data
-
         _original_data = original_data if many else [original_data]
         _data = data if many else [data]
 
@@ -56,6 +42,14 @@ class SixRiverSchema(Schema):
             for key, value in dict(e).items():
                 if value is None:
                     e.pop(key)
+                else:
+                    camel_key = camelcase(key)
+
+                    if camel_key not in e:
+                        e[camel_key] = value
+
+                    if camel_key != key:
+                        e.pop(key)
 
         return _data
 
@@ -66,7 +60,7 @@ class IdentifierSchema(SixRiverSchema):
     __schema_name__ = "identifier"
 
     label = fields.Str(required=True)
-    allowed_values = fields.Nested(fields.Str, many=True)
+    allowed_values = fields.List(fields.String(), many=True)
 
     @post_load
     def make_identifier(self, data, **kwargs):
