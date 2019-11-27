@@ -12,15 +12,15 @@ class PickSchema(SixRiverSchema):
     __schema_name__ = "pick"
 
     group_type = fields.Str()
-    group_id = fields.Str(data_key='groupID')
-    pick_id = fields.Str(data_key='pickID')
+    group_id = fields.Str(data_key='groupID', dump_to="groupID", load_from="groupID")
+    pick_id = fields.Str(data_key='pickID', dump_to="pickID", load_from="pickID")
     container = fields.Nested('ContainerSchema')
-    packout_container = fields.Nested('ContainerSchema')
-    source_location = fields.Str(required=True)
-    destination_location = fields.Str()
-    each_quantity = fields.Int(required=True)
+    packout_container = fields.Nested('ContainerSchema', load_from="packoutContainer")
+    source_location = fields.Str(required=True, load_from="sourceLocation")
+    destination_location = fields.Str(load_from="destinationLocation")
+    each_quantity = fields.Int(required=True, load_from="eachQuantity")
     product = fields.Nested(ProductSchema, required=True)
-    expected_shipping_date = fields.DateTime()
+    expected_shipping_date = fields.DateTime(load_from="expectedShippingDate")
     data = fields.Dict()
 
     @validates('group_type')
@@ -39,21 +39,23 @@ class PickCompleteSchema:
 
     __schema_name__ = "pickComplete"
 
-    started_at = fields.DateTime()
-    completed_at = fields.DateTime()
-    pick_id = fields.Str()
-    each_quantity = fields.Int()
-    source_location = fields.Str()
+    message_type = fields.Str(default=__schema_name__, load_from="messageType")
+    started_at = fields.DateTime(load_from="startedAt")
+    completed_at = fields.DateTime(load_from="completedAt")
+    pick_id = fields.Str(load_from="pickID", dump_to="pickID")
+    each_quantity = fields.Int(load_from="eachQuantity")
+    source_location = fields.Str(load_from="sourceLocation")
     product = fields.Nested('ProductSchema')
-    picked_quantity = fields.Int()
+    picked_quantity = fields.Int(load_from="pickedQuantity")
     reason = fields.List(fields.Str())
-    captured_identifiers = fields.Nested(fields.Dict(), many=True)
-    user_id = fields.Str()
-    device_id = fields.Str()
+    captured_identifiers = fields.List(fields.Dict(), many=True, load_from="capturedIdentifiers")
+    user_id = fields.Str(load_from="userID", dump_to="userID")
+    device_id = fields.Str(load_from="deviceID", dump_to="deviceID")
     data = fields.Dict()
 
     @post_load
     def make_pick_complete(self, data, **kwargs):
+        data.pop('message_type', None)
         return models.PickComplete(**data)
 
 
@@ -62,16 +64,16 @@ class PickTaskPickedSchema:
 
     __schema_name__ = "pickTaskPicked"
 
-    message_type = fields.Str(default=__schema_name__, required=True)
+    message_type = fields.Str(default=__schema_name__, load_from="messageType")
     timestamp = fields.DateTime(required=True)
-    pick_id = fields.Str(required=True)
-    group_id = fields.Str(required=True)
-    group_type = fields.Str(required=True)
+    pick_id = fields.Str(required=True, load_from="pickID", dump_to="pickID")
+    group_id = fields.Str(required=True, load_from="groupID", dump_to="groupID")
+    group_type = fields.Str(required=True, load_from="groupType")
     container = fields.Nested('ContainerSchema', required=True)
     induct = fields.Nested('InductSchema', required=True)
     picks = fields.Nested(PickCompleteSchema, many=True)
-    user_id = fields.Str()
-    device_id = fields.Str()
+    user_id = fields.Str(load_from="userID", dump_to="userID")
+    device_id = fields.Str(load_from="deviceID", dump_to="deviceID")
     data = fields.Dict()
 
     @validates('group_type')
@@ -90,5 +92,5 @@ class PickWaveSchema(SixRiverSchema):
 
     __schema_name__ = "pickWave"
 
-    message_type = fields.Str(default=__schema_name__, dump_only=True)
+    message_type = fields.Str(default=__schema_name__, dump_only=True, load_from="messageType")
     picks = fields.Nested(PickSchema, many=True)

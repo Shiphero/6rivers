@@ -64,6 +64,10 @@ class PickComplete:
     data: dict = None
 
     @property
+    def is_shortpick(self):
+        return self.each_quantity != self.picked_quantity
+
+    @property
     def failed(self):
         return self.reason not in [None, []]
 

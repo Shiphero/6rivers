@@ -38,6 +38,8 @@ class ContainerPickComplete:
     container: Container
     induct: Induct
     picks: List['PickComplete']  # avoid circular dependencies
+    user_id: str = None
+    device_id: str = None
     data: dict
 
     @property

@@ -25,21 +25,35 @@ class SixRiverSchema(Schema):
 
     @post_dump(pass_many=True, pass_original=True)
     def normalize(self, data, original_data, many, **kwargs):
-        original_data = original_data if many else [original_data]
-        _data = data if many else [data]
+        if many or isinstance(original_data, list):
+            _original_data = original_data
+
+        else:
+            _original_data = [original_data]
+
+        _tmp_data = data if many else [data]
 
         # Inspect the original object to convert enums
-        for idx, e in enumerate(original_data):
+        for idx, e in enumerate(_original_data):
             obj = e if isinstance(e, dict) else e.__dict__
             for key, value in obj.items():
                 if isinstance(value, enum.Enum):
-                    _data[idx][camelcase(key)] = value.value
+                    _tmp_data[idx][camelcase(key)] = value.value
 
-        # Let's remove None fields from the serialization
-        for e in _data:
+        # Let's remove None fields from the serialization and convert keys to camelcase
+        for e in _tmp_data:
             for key, value in dict(e).items():
                 if value is None:
                     e.pop(key)
+                else:
+                    camel_key = camelcase(key)
+
+                    if camel_key not in e:
+                        e[camel_key] = value
+
+                    # Keep only the camelcase
+                    if camel_key != key:
+                        e.pop(key)
 
         return data
 
@@ -66,9 +80,9 @@ class ProductSchema(SixRiverSchema):
     name = fields.Str()
     description = fields.Str()
     image = fields.Url()
-    unit_of_measure = fields.Str()
-    unit_of_measure_quantity = fields.Int()
-    dimension_unit_of_measure = fields.Str()
+    unit_of_measure = fields.Str(load_from="unitOfMeasure")
+    unit_of_measure_quantity = fields.Int(load_from="unitOfMeasureQuantity")
+    dimension_unit_of_measure = fields.Str(load_from="dimensionUnitOfMeasure")
     length = fields.Float()
     width = fields.Float()
     height = fields.Float()

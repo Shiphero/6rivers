@@ -25,10 +25,10 @@ class ContainerInductedSchema(SixRiverSchema):
 
     __schema_name__ = "containerInducted"
 
+    message_type = fields.Str(default=__schema_name__, required=True, load_from="messageType")
     timestamp = fields.AwareDateTime()
-    message_type = fields.Str(load_from="messageType")
     group_type = fields.Str(load_from="groupType")
-    group_id = fields.Str(load_from="groupID")
+    group_id = fields.Str(load_from="groupID", dump_to="groupID")
     container = fields.Nested(ContainerSchema)
     induct = fields.Nested('InductSchema')
     picks = fields.Nested('PickSchema', many=True)
@@ -44,15 +44,15 @@ class ContainerPickCompleteSchema(SixRiverSchema):
 
     __schema_name__ = "containerPickComplete"
 
+    message_type = fields.Str(default=__schema_name__, required=True, load_from="messageType")
     timestamp = fields.AwareDateTime()
-    message_type = fields.Str(load_from="messageType")
     group_type = fields.Str(load_from="groupType")
-    group_id = fields.Str(load_from="groupID")
+    group_id = fields.Str(load_from="groupID", dump_to="groupID")
     container = fields.Nested(ContainerSchema)
     induct = fields.Nested('InductSchema')
     picks = fields.Nested('PickCompleteSchema', many=True)
-    user_id = fields.Str(load_from="userID")
-    device_id = fields.Str(load_from="deviceID")
+    user_id = fields.Str(load_from="userID", , dump_to="userID")
+    device_id = fields.Str(load_from="deviceID", dump_to="deviceID")
     data = fields.Dict()
 
     @post_load
