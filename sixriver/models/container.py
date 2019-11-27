@@ -43,6 +43,8 @@ class ContainerPickComplete(object):
         container,  # Container
         induct,  # Induct
         picks,  # List['PickComplete']  # avoid circular dependencies
+        user_id=None, # str,
+        device_id=None, # str
         data=None,  # dict
     ):
         self.timestamp = timestamp
@@ -51,6 +53,8 @@ class ContainerPickComplete(object):
         self.container = container
         self.induct = induct
         self.picks = picks
+        self.user_id = user_id
+        self.device_id = device_id
         self.data = data
 
     @property

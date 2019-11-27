@@ -24,7 +24,20 @@ class Deserializer:
         """
         for s in cls._schemas:
             if s.__schema_name__ and data.get('messageType') == s.__schema_name__:
-                return s().load(data)
+                res = s().load(data)
+
+                if res.errors:
+                    print res.errors
+                    errors = []
+
+                    for k, v in res.errors.items():
+                        errors.append("{}: {}".format(k, v[0]))
+
+                    raise ValueError(
+                        "Error deserializing message. Details: {}".format(','.join(errors))
+                    )
+
+                return res.data
         else:
             raise ValueError("Unknown message type")
 
