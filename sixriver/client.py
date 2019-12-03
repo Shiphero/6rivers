@@ -1,9 +1,14 @@
+import logging
 import requests
+import inspect
 
 from urllib.parse import urljoin
 from functools import reduce
 
 from . import messages
+
+
+logger = logging.getLogger(__name__)
 
 
 def slash_join(*args):
@@ -26,7 +31,7 @@ class SixRiverClientError(Exception):
         except ValueError:
             message = response.text
 
-        super(ClientError, self).__init__(message)
+        super(SixRiverClientError, self).__init__(message)
 
 
 class SixRiverClient:
@@ -65,6 +70,9 @@ class SixRiverClient:
         endpoint = getattr(msg, '__endpoint__', None)
         method = getattr(msg, '__http_method__', None)
 
+        if inspect.ismethod(method):
+            method = method.__func__
+
         if not endpoint:
             raise TypeError(
                 f"Unsupported message of type {type(msg)}. " \
@@ -73,9 +81,12 @@ class SixRiverClient:
 
         url = slash_join(self._url, endpoint)
 
+        logger.info("Calling 6river [{}] {}".format(method, url))
+
         res = method(url, json=msg.serialize(), headers=self._headers)
 
         if res.status_code >= 300:
-            raise SixRiverClientError(url, response)
+            raise SixRiverClientError(url, res)
 
-        return response.json()
+        return res.json()
+
