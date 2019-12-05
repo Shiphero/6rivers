@@ -41,16 +41,14 @@ picks = [
 
 pickwave = sixr_messages.PickWaveMessage(*picks)
 
-try:
-    client = SixRvierClient(
-        username='test',
-        password='test',
-        host='http://test',
-        env='dev',
-        version='v2',
-    )
+client = SixRvierClient(
+    username='test',
+    assword='test',
+    host='http://test',
+    env='dev',
+    version='v2',
+)
     
-    res = client.send(pickwave)
-except Exception as e:
-    print(e)
+res = client.send(pickwave)
+
 ```
