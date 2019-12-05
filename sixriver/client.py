@@ -46,16 +46,24 @@ class SixRiverClient:
     """
 
     def __init__(self,
-        token,  # str
+        username=None,  # str
+        password=None,  # str
+        token=None,  # str
         url="https://sixdk.6river.tech/",  # str ="https://sixdk.6river.tech/"
         env="prod",  # str ="prod"
         version="v2",  # str ="v2"
     ):
+        self._username = username
+        self._password = password
         self._token = token
-        self._headers = {
-            "Content-Type": "application/json",
-            "6DK-Token": token
-        }
+        self._headers = {"Content-Type": "application/json"}
+
+        if token:
+            self._headers["6DK-Token"] = token
+
+        if not (token or (username and password)):
+            raise ValueError("Need to specify a token or username/password for the 6river client")
+
         self._url = "{}/{}/{}".format(url, env, version)
 
     def send(
@@ -90,7 +98,13 @@ class SixRiverClient:
 
         logger.info("Calling 6river [{}] {}".format(method, url))
 
-        res = method(url, json=msg.serialize(), headers=self._headers)
+        http_params = dict(headers=self._headers)
+
+        # Use basic auth if no token was defined
+        if self._username and self._password:
+            http_params['auth'] = (self._username, self._password)
+
+        res = method(url, json=msg.serialize(), **http_params)
 
         if res.status_code >= 300:
             raise SixRiverClientError(url, res)
