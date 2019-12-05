@@ -85,6 +85,7 @@ class ProductSchema(SixRiverSchema):
     unit_of_measure = fields.Str(load_from="unitOfMeasure")
     unit_of_measure_quantity = fields.Int(load_from="unitOfMeasureQuantity")
     dimension_unit_of_measure = fields.Str(load_from="dimensionUnitOfMeasure")
+    weight_unit_of_measure = fields.Str(load_from="weightUnitOfMeasure")
     length = fields.Float()
     width = fields.Float()
     height = fields.Float()
