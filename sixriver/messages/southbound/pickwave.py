@@ -7,7 +7,7 @@ from .base import SouthboundMessage
 
 class PickWaveMessage(SouthboundMessage):
 
-    __endpoint__ = 'pick-wave'
+    __endpoint__ = 'pick-waves'
     __http_method__ = requests.post
 
     def __init__(self, *picks):

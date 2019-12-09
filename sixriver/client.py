@@ -104,7 +104,7 @@ class SixRiverClient:
         if self._username and self._password:
             http_params['auth'] = (self._username, self._password)
 
-        res = method(url, json=msg.serialize(), **http_params)
+        res = method(url, json=msg.serialize().data, **http_params)
 
         if res.status_code >= 300:
             raise SixRiverClientError(url, res)
