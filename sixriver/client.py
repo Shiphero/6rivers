@@ -64,7 +64,7 @@ class SixRiverClient:
         if not (token or (username and password)):
             raise ValueError("Need to specify a token or username/password for the 6river client")
 
-        self._url = "{}/{}/{}".format(url, env, version)
+        self._url = "{}/{}/{}/".format(url, env, version)
 
     def send(
         self,
