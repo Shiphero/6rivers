@@ -10,8 +10,8 @@ from .induct import Induct
 @dataclass
 class Container:
 
-    id: str
-    type: str
+    id: str = None
+    container_type: str = None
 
 
 @dataclass
