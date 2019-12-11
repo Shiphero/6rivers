@@ -13,7 +13,7 @@ class ContainerSchema(SixRiverSchema):
     __schema_name__ = "container"
 
     id = fields.Str(load_from="containerID", dump_to="containerID")
-    container_type = fields.Str(load_from="containerType")
+    container_type = fields.Raw(load_from="containerType")  # this can be a str or a list of str
 
     @post_load
     def make_container(self, data, **kwargs):
