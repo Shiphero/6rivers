@@ -81,7 +81,7 @@ class ProductSchema(SixRiverSchema):
     id = fields.Str(required=True, data_key='productID', load_from="productID", dump_to="productID")
     name = fields.Str()
     description = fields.Str()
-    image = fields.Url()
+    image = fields.Str()
     unit_of_measure = fields.Str(load_from="unitOfMeasure")
     unit_of_measure_quantity = fields.Int(load_from="unitOfMeasureQuantity")
     dimension_unit_of_measure = fields.Str(load_from="dimensionUnitOfMeasure")

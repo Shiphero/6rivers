@@ -6,9 +6,9 @@ from .induct import Induct
 
 class Container(object):
 
-    def __init__(self, id, type=None):
+    def __init__(self, id, container_type=None):
         self.id = id
-        self.type = type
+        self.container_type = container_type
 
 
 class ContainerInducted(object):

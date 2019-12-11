@@ -12,8 +12,8 @@ class ContainerSchema(SixRiverSchema):
 
     __schema_name__ = "container"
 
-    id = fields.Str()
-    type = fields.Str()
+    id = fields.Str(load_from="containerID", dump_to="containerID")
+    container_type = fields.Str(load_from="containerType")
 
     @post_load
     def make_container(self, data, **kwargs):
