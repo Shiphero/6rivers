@@ -14,8 +14,8 @@ class InductSchema(SixRiverSchema):
 
     started_at = fields.DateTime(load_from="startedAt", required=True)
     completed_at = fields.DateTime(load_from="completedAt", required=True)
-    user_id = fields.Str(load_from="userID", required=True)
-    device_id = fields.Str(load_from="deviceID", required=True)
+    user_id = fields.Str(data_key='userID', load_from="userID", required=True)
+    device_id = fields.Str(data_key='deviceID', load_from="deviceID", required=True)
 
     @post_load
     def make_induct(self, data, **kwargs):

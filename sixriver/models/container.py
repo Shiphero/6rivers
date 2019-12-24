@@ -1,5 +1,5 @@
 from typing import List
-from dataclasses import dataclass, field
+#from dataclasses import dataclass, field
 
 from datetime import datetime
 
@@ -7,40 +7,63 @@ from .pick import GroupType, Pick
 from .induct import Induct
 
 
-@dataclass
-class Container:
+#@dataclass
+class Container(object):
 
-    id: str = None
-    container_type: str = None
+    def __init__(
+        self,
+        id=None,  # str = None
+        container_type=None,  # str = None
+    ):
+        self.id = id
+        self.container_type = container_type
+
+#@dataclass
+class ContainerInducted(object):
+
+    def __init__(
+        self,
+        timestamp,  # datetime
+        group_type,  # GroupType
+        group_id,  # str
+        container,  # Container
+        induct,  # Induct
+        picks,  # List['Pick']  # avoid circular dependencies
+        data=None,  # dict
+    ):
+        self.group_type = GroupType(group_type)
+        self.timestamp = timestamp
+        self.group_id = group_id
+        self.container = container
+        self.induct = induct
+        self.picks = picks
+        self.data = data
 
 
-@dataclass
-class ContainerInducted:
+#@dataclass
+class ContainerPickComplete(object):
 
-    timestamp: datetime
-    group_type: GroupType
-    group_id: str
-    container: Container
-    induct: Induct
-    picks: List['Pick']  # avoid circular dependencies
-    data: dict
-
-    def __post_init__(self):
-        self.group_type = GroupType(self.group_type)
-
-
-@dataclass
-class ContainerPickComplete:
-
-    timestamp: datetime
-    group_type: GroupType
-    group_id: str
-    container: Container
-    induct: Induct
-    picks: List['PickComplete']  # avoid circular dependencies
-    user_id: str = None
-    device_id: str = None
-    data: dict
+    def __init__(
+        self,
+        timestamp,  # datetime
+        group_type,  # GroupType
+        group_id,  # str
+        container,  # Container
+        induct,  # Induct
+        picks,  # List['PickComplete']  # avoid circular dependencies
+        user_id=None,  # str = None
+        device_id=None,  # str = None
+        data=None,  # dict
+    ):
+        self.timestamp = timestamp
+        self.group_type = GroupType(group_type)
+        self.group_id = group_id
+        self.container = container
+        self.induct = induct
+        self.picks = picks
+        self.user_id = user_id
+        self.device_id = device_id
+        self.data = data
 
     @property
     def has_errors(self):

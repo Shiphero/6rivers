@@ -76,7 +76,7 @@ class ProductSchema(SixRiverSchema):
 
     __schema_name__ = "product"
 
-    id = fields.Str(required=True, data_key='productID')
+    id = fields.Str(required=True, data_key='productID', load_from="productID")
     name = fields.Str()
     description = fields.Str()
     image = fields.Url()

@@ -2,7 +2,7 @@ import enum
 
 from datetime import datetime
 from typing import List, Type
-from dataclasses import dataclass, field
+# from dataclasses import dataclass, field
 
 from .common import Identifier, Product
 from ..utils import camelcase
@@ -27,41 +27,66 @@ def convert_group_type(group_type):
     return val
 
 
-@dataclass
+#@dataclass
 class Pick(object):
 
-    source_location: str
-    each_quantity: int
-    product: Product
+    def __init__(
+        self,
+        source_location,  # str
+        each_quantity,  # int
+        product,  # Product
+        group_type=GroupType.ORDER_PICK,  # GroupType = GroupType.ORDER_PICK
+        group_id=None,  # str = None
+        pick_id=None,  # str = None
+        container=None,  # List['Container'] = None
+        packout_container=None,  # List['Container'] = None
+        destination_location=None,  # str = None
+        expected_shipping_date=None,  # datetime = None
+        data=None,  # dict = None
+    ):
+        self.group_type = convert_group_type(group_type)
+        self.source_location = source_location
+        self.each_quantity = each_quantity
+        self.product = product
+        self.group_id = group_id
+        self.pick_id = pick_id
+        self.container = container
+        self.packout_container = packout_container
+        self.destination_location = destination_location
+        self.expected_shipping_date = expected_shipping_date
+        self.data = data
 
-    group_type: GroupType = GroupType.ORDER_PICK
-    group_id: str = None
-    pick_id: str = None
-    container: List['Container'] = None
-    packout_container: List['Container'] = None
-    destination_location: str = None
-    expected_shipping_date: datetime = None
-    data: dict = None
 
-    def __post_init__(self):
-        self.group_type = convert_group_type(self.group_type)
+#@dataclass
+class PickComplete(object):
 
-
-@dataclass
-class PickComplete:
-
-    started_at: datetime
-    completed_at: datetime
-    pick_id: str
-    each_quantity: int
-    source_location: str
-    product: Product
-    picked_quantity: int
-    reason: List[str] = None
-    captured_identifiers: List[dict] = None
-    user_id: str = None
-    device_id: str = None
-    data: dict = None
+    def __init__(
+        self,
+        started_at,  # datetime
+        completed_at,  # datetime
+        pick_id,  # str
+        each_quantity,  # int
+        source_location,  # str
+        product,  # Product
+        picked_quantity,  # int
+        reason=None,  # List[str] = None
+        captured_identifiers=None,  # List[dict] = None
+        user_id=None,  # str = None
+        device_id=None,  # str = None
+        data=None,  # dict = None
+    ):
+        self.started_at = started_at
+        self.completed_at = completed_at
+        self.pick_id = pick_id
+        self.each_quantity = each_quantity
+        self.source_location = source_location
+        self.product = product
+        self.picked_quantity = picked_quantity
+        self.reason = reason
+        self.captured_identifiers = captured_identifiers
+        self.user_id = user_id
+        self.device_id = device_id
+        self.data = data
 
     @property
     def is_shortpick(self):
@@ -72,22 +97,32 @@ class PickComplete:
         return self.reason not in [None, []]
 
 
-@dataclass
-class PickTaskPicked:
+#@dataclass
+class PickTaskPicked(object):
 
-    timestamp: datetime
-    pick_id: str
-    group_id: str
-    group_type: GroupType
-    container: Type['Container']
-    induct: Type['Induct']
-    picks: List[PickComplete]
-    user_id: str = None
-    device_id: str = None
-    data: str = None
-
-    def __post_init__(self):
-        self.group_type = convert_group_type(self.group_type)
+    def __init__(
+        self,
+        timestamp,  # datetime
+        pick_id,  # str
+        group_id,  # str
+        group_type,  # GroupType
+        container,  # Type['Container']
+        induct,  # Type['Induct']
+        picks,  # List[PickComplete]
+        user_id=None,  # str = None
+        device_id=None,  # str = None
+        data=None,  # str = None
+    ):
+        self.group_type = convert_group_type(group_type)
+        self.timestamp = timestamp
+        self.pick_id = pick_id
+        self.group_id = group_id
+        self.container = container
+        self.induct = induct
+        self.picks = picks
+        self.user_id = user_id
+        self.device_id = device_id
+        self.data = data
 
     @property
     def has_errors(self):
