@@ -49,8 +49,8 @@ class ContainerPickComplete(object):
         group_type,  # GroupType
         group_id,  # str
         container,  # Container
-        induct,  # Induct
         picks,  # List['PickComplete']  # avoid circular dependencies
+        induct=None,  # Induct
         user_id=None,  # str = None
         device_id=None,  # str = None
         data=None,  # dict
