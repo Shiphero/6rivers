@@ -1,7 +1,7 @@
 import enum
 
 from datetime import date
-from marshmallow import Schema, EXCLUDE, fields, pprint, post_dump, post_load
+from marshmallow import Schema, EXCLUDE, fields, pprint, post_dump, post_load, pre_load
 
 from ..utils import camelcase
 from .. import models
@@ -89,6 +89,12 @@ class ProductSchema(SixRiverSchema):
     height = fields.Float()
     weight = fields.Float()
     identifiers = fields.Nested(IdentifierSchema, many=True)
+
+    @pre_load
+    def remove_empty(self, item, **kwargs):
+        if not item.get("image"):
+            item.pop("image", None)
+        return item
 
     @post_load
     def make_product(self, data, **kwargs):

@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validates, ValidationError, post_dump, post_load
+from marshmallow import Schema, fields, validates, ValidationError, post_dump, post_load, pre_load
 
 from sixriver import models
 
@@ -52,6 +52,17 @@ class PickCompleteSchema(SixRiverSchema):
     user_id = fields.Str(data_key="userID", load_from="userID", dump_to="userID")
     device_id = fields.Str(data_key="deviceID", load_from="deviceID", dump_to="deviceID")
     data = fields.Dict()
+
+    @pre_load
+    def remove_empty(self, item, **kwargs):
+        for f in ("startedAt", "completedAt"):
+            if not item.get(f):
+                item.pop(f, None)
+
+        if item.get("capturedIdentifiers") in [None, "", "[]"]:
+            item.pop("capturedIdentifiers", None)
+
+        return item
 
     @post_load
     def make_pick_complete(self, data, **kwargs):

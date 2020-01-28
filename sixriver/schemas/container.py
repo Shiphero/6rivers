@@ -1,5 +1,5 @@
 from datetime import date
-from marshmallow import Schema, fields, pprint, post_load
+from marshmallow import Schema, fields, pprint, post_load, pre_load
 
 from .. import models
 

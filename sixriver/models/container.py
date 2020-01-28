@@ -48,8 +48,8 @@ class ContainerPickComplete(object):
         timestamp,  # datetime
         group_type,  # GroupType
         group_id,  # str
-        container,  # Container
         picks,  # List['PickComplete']  # avoid circular dependencies
+        container=None,  # Container
         induct=None,  # Induct
         user_id=None,  # str = None
         device_id=None,  # str = None

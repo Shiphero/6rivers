@@ -62,13 +62,13 @@ class PickComplete(object):
 
     def __init__(
         self,
-        started_at,  # datetime
-        completed_at,  # datetime
         pick_id,  # str
         each_quantity,  # int
         source_location,  # str
         product,  # Product
         picked_quantity,  # int
+        started_at=None,  # datetime
+        completed_at=None,  # datetime
         reason=None,  # List[str] = None
         captured_identifiers=None,  # List[dict] = None
         user_id=None,  # str = None
