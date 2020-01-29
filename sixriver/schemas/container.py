@@ -4,10 +4,10 @@ from marshmallow import Schema, fields, pprint, post_load, pre_load
 from .. import models
 
 from .common import SixRiverSchema
-from .deserializer import register_schema
 
 
-@register_schema
+
+
 class ContainerSchema(SixRiverSchema):
 
     __schema_name__ = "container"
@@ -20,7 +20,7 @@ class ContainerSchema(SixRiverSchema):
         return models.Container(**data)
 
 
-@register_schema
+
 class ContainerInductedSchema(SixRiverSchema):
 
     __schema_name__ = "containerInducted"
@@ -40,7 +40,7 @@ class ContainerInductedSchema(SixRiverSchema):
         return models.ContainerInducted(**data)
 
 
-@register_schema
+
 class ContainerPickCompleteSchema(SixRiverSchema):
 
     __schema_name__ = "containerPickComplete"

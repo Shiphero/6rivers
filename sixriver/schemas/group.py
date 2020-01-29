@@ -3,10 +3,10 @@ from marshmallow import Schema, fields, validates, ValidationError, post_dump, p
 from sixriver import models
 
 from .common import SixRiverSchema
-from .deserializer import register_schema
 
 
-@register_schema
+
+
 class GroupCancelSchema(SixRiverSchema):
 
     __schema_name__ = "groupCancel"

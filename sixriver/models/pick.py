@@ -96,6 +96,10 @@ class PickComplete(object):
     def failed(self):
         return self.reason not in [None, []]
 
+    @property
+    def barcodes(self):
+        return {e["barcode"]: e.get("quantity") for e in self.captured_identifiers if "barcode" in e}
+
 
 #@dataclass
 class PickTaskPicked(object):

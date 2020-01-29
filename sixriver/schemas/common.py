@@ -6,8 +6,6 @@ from marshmallow import Schema, EXCLUDE, fields, pprint, post_dump, post_load, p
 from ..utils import camelcase
 from .. import models
 
-from .deserializer import register_schema
-
 
 class SixRiverSchema(Schema):
     """
@@ -58,7 +56,7 @@ class SixRiverSchema(Schema):
         return data
 
 
-@register_schema
+
 class IdentifierSchema(SixRiverSchema):
 
     __schema_name__ = "identifier"
@@ -71,7 +69,7 @@ class IdentifierSchema(SixRiverSchema):
         return models.Identifier(**data)
 
 
-@register_schema
+
 class ProductSchema(SixRiverSchema):
 
     __schema_name__ = "product"

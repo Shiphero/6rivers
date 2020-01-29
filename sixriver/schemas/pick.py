@@ -3,10 +3,10 @@ from marshmallow import Schema, fields, validates, ValidationError, post_dump, p
 from sixriver import models
 
 from .common import SixRiverSchema, ProductSchema
-from .deserializer import register_schema
 
 
-@register_schema
+
+
 class PickSchema(SixRiverSchema):
 
     __schema_name__ = "pick"
@@ -34,7 +34,7 @@ class PickSchema(SixRiverSchema):
         return models.Pick(**data)
 
 
-@register_schema
+
 class PickCompleteSchema(SixRiverSchema):
 
     __schema_name__ = "pickComplete"
@@ -70,7 +70,7 @@ class PickCompleteSchema(SixRiverSchema):
         return models.PickComplete(**data)
 
 
-@register_schema
+
 class PickTaskPickedSchema(SixRiverSchema):
 
     __schema_name__ = "pickTaskPicked"
@@ -99,7 +99,7 @@ class PickTaskPickedSchema(SixRiverSchema):
         return models.PickTaskPicked(**data)
 
 
-@register_schema
+
 class PickWaveSchema(SixRiverSchema):
 
     __schema_name__ = "pickWave"

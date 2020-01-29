@@ -3,7 +3,7 @@ from marshmallow import Schema, fields, validates, ValidationError, post_dump, p
 from sixriver import models
 
 from .common import SixRiverSchema
-from .deserializer import register_schema
+
 
 
 class AcknowledgementErrorSchema(SixRiverSchema):
@@ -16,7 +16,7 @@ class AcknowledgementErrorSchema(SixRiverSchema):
         return models.AcknowledgementError(**data)
 
 
-@register_schema
+
 class AcknowledgementSchema(SixRiverSchema):
 
     __schema_name__ = "acknowledgement"

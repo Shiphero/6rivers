@@ -1,4 +1,4 @@
-from .deserializer import Deserializer, register_schema
+from .deserializer import Deserializer
 from .common import SixRiverSchema, IdentifierSchema, ProductSchema
 from .container import ContainerSchema, ContainerInductedSchema, ContainerPickCompleteSchema
 from .pick import PickSchema, PickWaveSchema, PickCompleteSchema, PickTaskPickedSchema

@@ -4,10 +4,10 @@ from marshmallow import Schema, fields, pprint, post_dump, post_load, pre_load
 from .. import models
 
 from .common import SixRiverSchema
-from .deserializer import register_schema
 
 
-@register_schema
+
+
 class InductSchema(SixRiverSchema):
 
     __schema_name__ = "induct"
