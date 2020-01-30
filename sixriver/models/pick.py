@@ -83,7 +83,7 @@ class PickComplete(object):
         self.product = product
         self.picked_quantity = picked_quantity
         self.reason = reason
-        self.captured_identifiers = captured_identifiers
+        self.captured_identifiers = captured_identifiers or []
         self.user_id = user_id
         self.device_id = device_id
         self.data = data
@@ -91,6 +91,10 @@ class PickComplete(object):
     @property
     def is_shortpick(self):
         return self.each_quantity != self.picked_quantity
+
+    @property
+    def rejected(self):
+        return self.reason == ["REJECTED"]
 
     @property
     def failed(self):
