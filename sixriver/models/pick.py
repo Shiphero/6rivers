@@ -98,7 +98,9 @@ class PickComplete(object):
 
     @property
     def failed(self):
-        return self.reason not in [None, []]
+        reasons = self.reason or []
+        reasons = [r for r in reasons if r not in ["TAP_TO_SCAN"]]
+        return len(reasons) > 0
 
     @property
     def barcodes(self):
